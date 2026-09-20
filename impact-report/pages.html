@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MAJU | Read report as images</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #eef1f5;
+      color: #172b45;
+    }
+    header { padding: 16px; background: white; }
+    h1 { margin: 0 0 12px; font-size: 20px; }
+    nav { display: flex; flex-wrap: wrap; gap: 10px; }
+    nav a {
+      padding: 12px;
+      border: 1px solid #172b45;
+      border-radius: 6px;
+      text-decoration: none;
+    }
+    a { color: #172b45; }
+    a:focus-visible {
+      outline: 3px solid #c26900;
+      outline-offset: 3px;
+    }
+    main { max-width: 1100px; margin: auto; padding: 12px; }
+    figure {
+      margin: 0 0 24px;
+      background: white;
+      min-height: 250px;
+    }
+    figcaption { padding: 12px; }
+    img { display: block; width: 100%; height: auto; }
+    .error { padding: 12px; color: #9a2121; }
+  </style>
+</head>
+<body>
+  <header id="top">
+    <h1>MAJU · Impact Report 2021–2024</h1>
+    <nav aria-label="Report options">
+      <a href="./index.html">Back to PDF reader</a>
+      <a href="./report.pdf" download>Download PDF</a>
+    </nav>
+    <p>Scroll through all 27 pages. Tap a page to open its full-size image.</p>
+  </header>
+
+  <main id="pages"></main>
+
+  <noscript>
+    <p>Please enable JavaScript to display the page images,
+      or use the Download PDF link above.</p>
+  </noscript>
+
+  <script>
+    const container = document.getElementById("pages");
+
+    for (let page = 1; page <= 27; page++) {
+      const figure = document.createElement("figure");
+      figure.id = "page-" + page;
+
+      const caption = document.createElement("figcaption");
+      caption.textContent = "Page " + page + " of 27";
+
+      const link = document.createElement("a");
+      link.href = "./pages/page-" + String(page).padStart(2, "0") + ".jpg";
+      link.target = "_blank";
+      link.rel = "noopener";
+
+      const img = document.createElement("img");
+      img.alt = "MAJU Impact Report, page " + page;
+      img.loading = page === 1 ? "eager" : "lazy";
+      img.decoding = "async";
+      img.addEventListener("error", () => {
+        const message = document.createElement("p");
+        message.className = "error";
+        message.textContent =
+          "This page image could not load. Please refresh or return to the PDF reader.";
+        figure.append(message);
+      }, { once: true });
+      img.src = link.href;
+
+      link.append(img);
+      figure.append(caption, link);
+      container.append(figure);
+    }
+  </script>
+</body>
+</html>
