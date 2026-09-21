@@ -1,3 +1,11 @@
+// Modified by MAJU on 2026-09-21: keep reader storage in page memory only.
+const majuTemporaryStorage = (() => {
+  const values = new Map();
+  return {
+    getItem(key) { return values.get(key) ?? null; },
+    setItem(key, value) { values.set(key, String(value)); }
+  };
+})();
 /**
  * @licstart The following is the entire license notice for the
  * JavaScript code in this page
@@ -5614,7 +5622,8 @@ const defaultOptions = new Map([["allowedGlobalEvents", {
   value: "./debugger.mjs",
   kind: OptionKind.VIEWER
 }], ...[["defaultUrl", {
-  value: "compressed.tracemonkey-pldi-09.pdf",
+  // Modified by MAJU on 2026-09-21: use the MAJU Impact Report as the default.
+  value: "../../report.pdf",
   kind: OptionKind.VIEWER
 }]], ["defaultZoomDelay", {
   value: 400,
@@ -8197,7 +8206,7 @@ class SignatureStorage {
     this.#signal = signal;
   }
   #save() {
-    localStorage.setItem(KEY_STORAGE, JSON.stringify(Object.fromEntries(this.#signatures)));
+    majuTemporaryStorage.setItem(KEY_STORAGE, JSON.stringify(Object.fromEntries(this.#signatures)));
   }
   async getAll() {
     if (this.#signal) {
@@ -8217,7 +8226,7 @@ class SignatureStorage {
     }
     if (!this.#signatures) {
       this.#signatures = new Map();
-      const data = localStorage.getItem(KEY_STORAGE);
+      const data = majuTemporaryStorage.getItem(KEY_STORAGE);
       if (data) {
         for (const [key, value] of Object.entries(JSON.parse(data))) {
           this.#signatures.set(key, value);
@@ -8264,11 +8273,11 @@ class SignatureStorage {
 function initCom(app) {}
 class Preferences extends BasePreferences {
   async _writeToStorage(prefObj) {
-    localStorage.setItem("pdfjs.preferences", JSON.stringify(prefObj));
+    majuTemporaryStorage.setItem("pdfjs.preferences", JSON.stringify(prefObj));
   }
   async _readFromStorage(prefObj) {
     return {
-      prefs: JSON.parse(localStorage.getItem("pdfjs.preferences"))
+      prefs: JSON.parse(majuTemporaryStorage.getItem("pdfjs.preferences"))
     };
   }
 }
@@ -23725,10 +23734,10 @@ class ViewHistory {
   }
   async _writeToStorage() {
     const databaseStr = JSON.stringify(this.database);
-    localStorage.setItem("pdfjs.history", databaseStr);
+    majuTemporaryStorage.setItem("pdfjs.history", databaseStr);
   }
   async _readFromStorage() {
-    return localStorage.getItem("pdfjs.history");
+    return majuTemporaryStorage.getItem("pdfjs.history");
   }
   async set(name, val) {
     await this._initializedPromise;
