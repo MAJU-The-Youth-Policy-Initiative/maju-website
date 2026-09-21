@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MAJU | EP-CCAs: A Different Ball Game</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; }
+    body {
+      font-family: Arial, sans-serif;
+      color: #172b45;
+      background: #eef1f5;
+      display: flex;
+      flex-direction: column;
+      height: 100dvh;
+    }
+    header {
+      background: white;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      border-bottom: 1px solid #d8dee7;
+    }
+    h1 { margin: 0; font-size: 18px; }
+    nav { display: flex; flex-wrap: wrap; gap: 8px; }
+    a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      padding: 10px 14px;
+      border: 1px solid #172b45;
+      border-radius: 6px;
+      color: #172b45;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    a.primary { background: #172b45; color: white; }
+    a:hover { text-decoration: underline; }
+    a:focus-visible {
+      outline: 3px solid #c26900;
+      outline-offset: 3px;
+    }
+    main { flex: 1; min-height: 0; }
+    iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+    @media (max-width: 480px) {
+      header { padding: 10px 12px; gap: 8px; }
+      h1 { font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>MAJU · EP-CCAs: A Different Ball Game</h1>
+    <nav aria-label="Report options">
+      <a class="primary"
+         href="../../pdfjs/web/viewer.html?file=../../policy-papers/ep-ccas/report.pdf#zoom=page-fit"
+         target="_blank" rel="noopener">
+        Open in new tab ↗
+      </a>
+      <a href="./report.pdf"
+         download="MAJU-ep-ccas.pdf">
+        Download PDF
+      </a>
+      <a href="./pages.html">Read as images</a>
+    </nav>
+  </header>
+  <main>
+    <iframe
+      title="MAJU EP-CCAs: A Different Ball Game"
+      src="../../pdfjs/web/viewer.html?file=../../policy-papers/ep-ccas/report.pdf#zoom=page-fit"
+      allowfullscreen>
+    </iframe>
+  </main>
+</body>
+</html>
